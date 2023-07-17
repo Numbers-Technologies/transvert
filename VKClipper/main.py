@@ -2,11 +2,50 @@ import json
 import requests
 import os
 from config import *
+from pprint import pprint
+
+token = "vk1.a.gAbcGWiuz3LYZCl8Za7tRLat_oUdl0VhANAq6rVQo7V_miaPMT-mCO_dfuiMhrB-8-HuJRybZ1yWa32Y0Bc5PoO35DPgMuUv2bLJ0nU4qDaRV__44V1IqoZDLDFZ0cbnCiGZQWiSnHOLQbECmYMUpEQK1yR1dBBwQ9h967kF1EzgunWDXi9-VtVyv3EjYH_pw0puRvOkIWUOKyIPilODNw"
+
+
+class Post:
+    def __init__(self, text: str, content: list, post_id: int = 0) -> None:
+        self.post_id: int = post_id
+        self.text: str = text
+        self.content: list = content
+
+    def __str__(self):
+        return f'Post({self.post_id}, {self.text}, {self.content})'
 
 
 
+class VKClipper:
+    def __init__(self, group_name: str, vk_token: str, api_version: str = '5.131', count: int = 2):
+        self.group_name = group_name
+        self.url = f'https://api.vk.com/method/wall.get?domain={group_name}&count={str(count)}&access_token={token}&v={api_version}'
+
+    def get_posts(self) -> None:
+        self.response = requests.get(self.url).json()['response']['items']
+        #pprint(self.response)
+
+        for i in self.response:
+            post = Post(i['id'], i['text'], i['attachments'])
+            print(post.text)
+        
+
+VKClipper(group_name="slvgoo", vk_token=token).get_posts()
+
+
+
+
+
+
+
+
+
+
+"""
 def get_wall_post():
-    url = f"https://api.vk.com/method/wall.get?domain={group_name}&count={post_count}&access_token={token_vk}&v=5.131"
+    url = f"https://api.vk.com/method/wall.get?domain={group_name}&count={str(count)}&access_token={vk_token}&v={api_version}"
     req = requests.get(url)
     src = req.json()
 
@@ -62,6 +101,4 @@ def get_wall_post():
 
 def main():
     get_wall_post()
-
-if __name__ == '__main__':
-    main()
+"""
