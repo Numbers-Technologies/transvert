@@ -1,3 +1,5 @@
-token_vk = "token"
-group_name = "projmoon"
-post_count = 10
+import os
+
+VK_TOKEN = os.getenv('VK_TOKEN')
+REFRESH_RATE = int(os.getenv('REFRESH_RATE'))
+GROUP_NAME = os.getenv('GROUP_NAME')
