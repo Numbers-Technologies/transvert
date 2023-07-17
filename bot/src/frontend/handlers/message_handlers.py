@@ -1,7 +1,6 @@
-"""
-Commands/Message handler.
-Written by Daniil Ermolaev <blcklptn@icloud.com> 17.07.2023.
-"""
+# Commands/Message handler.
+# Written by Daniil Ermolaev <blcklptn@icloud.com> 17.07.2023.
+
 from dispatcher import dp, bot
 from . import texts
 

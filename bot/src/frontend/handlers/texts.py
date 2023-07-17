@@ -1,3 +1,6 @@
+# All texts will be placed there.
+# Written by Daniil Ermolaev <blcklptn@icloud.com> 17.07.2023.
+
 on_start = """
 Добро пожаловать!
 Используй меня для отправки поста.
