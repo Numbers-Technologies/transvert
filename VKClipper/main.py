@@ -3,7 +3,8 @@
 # 
 # Usage example:
 # ```
-# VKClipper(params...).start_session()
+# VKClipper(params...).start_session() <- For start session.
+# Post(str, list, int) <- For creating post object from json
 # ```
 # Written by Andrey Averin <email@email.root> 17.07.2023 with
 # Co-author(s): Daniil Ermolaev <blcklptn@icloud.com> 18.07.2023.
@@ -14,10 +15,10 @@ from config import *
 from typing import Self
 import time
 from pprint import pprint
+import base64
 
 # For serialization via pickle.
 # Outut: Posts.{post_id, text, content}
-# From Pickle: bytes
 class Post:
     def __init__(self, text: str, content: list, post_id: int = 0) -> Self:
         self.post_id: int = post_id
@@ -28,7 +29,7 @@ class Post:
         return f'Post({self.post_id}, {self.text}, {self.content})'
 
 
-
+# Clip some posts from vk/group_name
 class VKClipper:
     def __init__(self, group_name: str, vk_token: str, api_version: str = '5.131', count: int = 1) -> Self:
         self.group_name = group_name
@@ -48,7 +49,7 @@ class VKClipper:
             if i['hash'] not in self.old_hashes:
                 posts.append(post)
                 self.old_hashes.append(i['hash'])
-        if len(posts) != 0: return pickle.dumps(posts, protocol=pickle.HIGHEST_PROTOCOL)
+        if len(posts) != 0: return base64.b64encode(pickle.dumps(posts, protocol=pickle.HIGHEST_PROTOCOL))
         return None
     
     def start_session(self):
